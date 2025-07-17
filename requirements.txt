@@ -1,3 +1,6 @@
 django
-rest_framework
+djangorestframework
 django-extensions
+gunicorn==21.2.0
+whitenoise
+djangorestframework-authtoken

@@ -7,11 +7,17 @@ from .serializers import TaskSerializer
 from .models import Task
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from rest_framework import status
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
+from django.contrib.auth import authenticate
 # Create your views here.
 
 @api_view(['GET'])
 def apiOverview(request):
     api_urls={
+        'Register':'/register/',
+        'Login':'/login/',
         'List':'/task-list/',
         'Detail View':'/task-detail/<str:pk>',
         'Create':'/task-create/',
@@ -20,6 +26,35 @@ def apiOverview(request):
         'Search':'/task-search/?q=your_query'
         }
     return Response(api_urls)
+
+@api_view(['POST'])
+def register(request):
+    username=request.data.get('username')
+    password=request.data.get('password')
+    if not username or not password:
+        return Response({'error':"username and password are required"},status=400)
+    if User.objects.filter(username=username).exists():
+        return Response({'error':'username already exists'},status=400)
+    
+    user=User.objects.create_user(username=username,password=password)
+    token= Token.objects.create(user=user)
+    return Response({'token':token.key},status=201)
+
+@api_view(['POST'])
+def login(request):
+    username=request.data.get('username')
+    password=request.data.get('password')
+    user=authenticate(username=username,password=password)
+    if user is None:
+        return Response({'error':"Invalid credentials"},status=400)
+    token,created=Token.objects.get_or_create(user=user)
+    return Response({'token':token.key},status=200)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def logout(request):
+    request.user.auth_token.delete()
+    return Response({'message':"Successfully logged out"},status=200)
 
 
 @api_view(['GET'])
@@ -87,3 +122,4 @@ def taskSearch(request):
     tasks=tasks.filter(Q(assigned_by=request.user) | Q(assigned_to=request.user)).order_by('-created_at')
     serializer=TaskSerializer(tasks,many=True)
     return Response(serializer.data)
+
