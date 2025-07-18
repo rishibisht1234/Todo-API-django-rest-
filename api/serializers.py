@@ -30,3 +30,30 @@ class TaskSerializer(serializers.ModelSerializer):
         #     'title',
         #     'completed'
         # )
+class TaskCreateSerializer(serializers.ModelSerializer):
+    assigned_to_id=serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), source='assigned_to', write_only=True
+    )
+    class Meta:
+        model=Task
+        fields=(
+            'title',
+            'description',
+            'assigned_to_id',
+            'deadline'
+        )
+        
+class TaskUpdateSerializer(serializers.ModelSerializer):
+    assigned_to_id=serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), source='assigned_to', write_only=True
+    )
+    class Meta:
+        model=Task
+        fields=(
+            'title',
+            'description',
+            'completed',
+            'deadline',
+            'assigned_to_id',
+
+        )

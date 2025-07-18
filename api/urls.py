@@ -1,15 +1,16 @@
 from django.urls import path
-from . import views
+from .views import *
+
 
 urlpatterns = [
-    path('',views.apiOverview,name='api-overview'),
-    path('register/', views.register, name='register'),
-    path('login/', views.login, name='login'),
-    path('logout/', views.logout, name='logout'),
-    path('task-list/',views.taskList,name='task-list'),
-    path('task-detail/<str:pk>',views.taskDetail,name='task-detail'),
-    path('task-create/',views.taskCreate,name='task-create'),
-    path('task-update/<str:pk>',views.taskUpdate,name='task-update'),
-    path('task-delete/<str:pk>',views.taskDelete,name='task-delete'),
-    path('task-search/',views.taskSearch,name='task-search'),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('task-list/',TaskListView.as_view(),name='task-list'),
+    path('task-detail/<str:pk>',TaskDetailView.as_view(),name='task-detail'),
+    path('task-create/',TaskCreateView.as_view(),name='task-create'),
+    path('task-update/<str:pk>',TaskUpdateView.as_view(),name='task-update'),
+    path('task-toggle/<str:pk>',CompleteTaskToggleView.as_view(),name='task-complete-toggle'),
+    path('task-delete/<str:pk>',TaskDeleteView.as_view(),name='task-delete'),
+    path('task-search/',TaskSearchView.as_view(),name='task-search'),
 ]
