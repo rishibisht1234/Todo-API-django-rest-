@@ -144,6 +144,5 @@ SPECTACULAR_SETTINGS = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5500",  # or wherever your frontend runs
     "http://127.0.0.1:5500",
-    "https://your-deployment-url.com"
 ]
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
