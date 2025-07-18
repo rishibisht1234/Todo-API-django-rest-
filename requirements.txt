@@ -4,4 +4,3 @@ django-extensions
 gunicorn==21.2.0
 whitenoise
 drf-spectacular
-django-cors-headers

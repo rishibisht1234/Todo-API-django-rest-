@@ -1,0 +1,51 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.heading{
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: 700;
+}
+.box{
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.login,.register{
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 0.5rem;
+    height: 500px;
+    width: 500px;
+    border: 2px solid black;
+}
+.loginHeading, .registerHeading{
+    font-size: 75px;
+    font-weight: 700;
+}
+.login input,.register input{
+    font-size: 2.5rem;
+    border-radius: 0.5rem;
+    border: 2px solid black;
+}
+.login button,.register button{
+    font-size: 1.85rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  
+}
+
+.register a{
+    text-decoration: none;
+}
