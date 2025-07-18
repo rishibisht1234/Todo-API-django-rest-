@@ -35,8 +35,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'whitenoise.runserver_nostatic',
     'drf_spectacular',
-    
-    
+    'corsheaders'
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -54,6 +53,7 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.middleware.security.SecurityMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -141,3 +141,9 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5500",  # or wherever your frontend runs
+    "http://127.0.0.1:5500",
+    "https://your-deployment-url.com"
+]
+CORS_ALLOW_ALL_ORIGINS = True
