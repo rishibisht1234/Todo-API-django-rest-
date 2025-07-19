@@ -145,7 +145,7 @@ class TaskCreateView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(assigned_by=self.request.user)
+        serializer.save(assigned_by=self.request.user,assigned_to=self.request.user)
         
 class TaskUpdateView(generics.UpdateAPIView):
     queryset = Task.objects.all()
