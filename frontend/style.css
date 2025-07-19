@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
 }
-
 .heading{
     height: 75px;
     display: flex;
@@ -48,4 +47,12 @@
 
 .register a{
     text-decoration: none;
+}
+
+
+
+.task{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

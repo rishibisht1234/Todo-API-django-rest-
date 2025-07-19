@@ -3,14 +3,13 @@ let usernameInput=document.querySelector(".username");
 let passwordInput=document.querySelector(".password");
 loginButton.addEventListener("click",async (e)=>{
     e.preventDefault();
-    alert("js");
     const username = usernameInput.value.trim();
     const password = passwordInput.value;
       if (!username || !password) {
     alert("Please enter both username and password");
     return;
   }
-  let url="https://todoapi-3kjr.onrender.com/api/login/";
+  let url="https://todoapi-3kjr.onrender.com/login/";
 let options={
     "method":"POST",
      headers: {
@@ -29,12 +28,13 @@ let res=await fetch(url,options);
 
     const data = await res.json();
     const token = data.token;
+    
 
   localStorage.setItem("authToken", token);
   localStorage.setItem("username", data.username);
 
-    alert("Login successful!");
-     window.location.href="/Todo-API-django-rest-/frontend/dashboard.html";
+
+     window.location.href="/Todo-API-django-rest-/frontend/list.html";
 }catch (error) {
     console.error("Login error:", error);
     alert("Something went wrong. Check console.");
