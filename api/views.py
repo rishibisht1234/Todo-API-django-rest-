@@ -215,7 +215,25 @@ class TaskSearchView(generics.ListAPIView):
         return qs.filter(Q(assigned_by=self.request.user) |
                          Q(assigned_to=self.request.user)).order_by('-created_at')
 
-
+class UsernameIdMappingView(APIView):
+    permission_classes=[IsAuthenticated]
+    
+    @extend_schema(
+        description="Get all User's id, username and email",
+        responses=inline_serializer(
+            name="Userlist",
+            fields={
+                "id": serializers.IntegerField(),
+                "username": serializers.CharField(),
+                "email": serializers.EmailField(),
+            }
+        )
+    )
+    def get(self,request):
+        users=User.objects.all()
+        serializers=UserSerializer(users,many=True)
+        return Response(serializers.data)
+            
 
 
 

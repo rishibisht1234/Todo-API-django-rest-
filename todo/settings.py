@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import os
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG=False
+DEBUG=True
 
 ALLOWED_HOSTS = ['todoapi-3kjr.onrender.com']
 
@@ -137,7 +137,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Todo API',
-    'DESCRIPTION': 'API documentation for your Task/Todo app',
+    'DESCRIPTION': 'API documentation for Task/Todo app',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }

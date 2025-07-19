@@ -13,4 +13,5 @@ urlpatterns = [
     path('task-toggle/<str:pk>',CompleteTaskToggleView.as_view(),name='task-complete-toggle'),
     path('task-delete/<str:pk>',TaskDeleteView.as_view(),name='task-delete'),
     path('task-search/',TaskSearchView.as_view(),name='task-search'),
+    path("user-list/",UsernameIdMappingView.as_view(),name="user-list"),
 ]
