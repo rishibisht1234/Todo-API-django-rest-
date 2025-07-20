@@ -37,8 +37,73 @@ const taskId = String(taskElement.dataset.id);
         <h2>${task.title}</h2>
         <p>${task.description}</p>
         <p>${status}</p><br>
+        <button class="showDetails">Show Details</button>
+        <button class="updateTask">Update Task</button>
+        <button class="toggleBtn">Toggle Status</button>
         <button class="deleteBtn">Delete Task</button>
     `;
+    const update=taskElement.querySelector(".updateTask");
+    update.addEventListener("click",async () => {
+        const token = localStorage.getItem("authToken");
+          const res = await fetch(`https://todoapi-3kjr.onrender.com/task-detail/${taskId}/`, {
+            method:"PUT",
+        headers: {
+            "Authorization": `Token ${token}`
+        }
+    });
+        taskElement.innerHTML = `
+        <form class="updateForm">
+            <input class="editTitle" value="${task.title}" required><br>
+            <textarea class="editDescription" required>${task.description}</textarea><br>
+            <label>
+                <input type="checkbox" class="editCompleted" ${task.completed ? "checked" : ""}> Completed
+            </label><br>
+            <input type="datetime-local" class="editDeadline" value="${task.deadline.slice(0, 16)}" required><br>
+            <button type="submit">Save Changes</button>
+            <button type="button" class="cancelUpdate">Cancel</button>
+        </form>
+    `;
+    const updateForm = taskElement.querySelector(".updateForm");
+    updateForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const updatedData = {
+            title: document.querySelector(".editTitle").value,
+            description: document.querySelector(".editDescription").value,
+            completed: document.querySelector(".editCompleted").checked,
+            deadline: new Date(document.querySelector(".editDeadline").value).toISOString()
+        };
+
+        const updateRes = await fetch(`https://todoapi-3kjr.onrender.com/task-update/${taskId}`, {
+            method: "PUT",
+            headers: {
+                "Authorization": `Token ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedData)
+        });
+
+        if (updateRes.ok) {
+            alert("Task updated successfully.");
+            await getList(); // Refresh task list
+        } else {
+            const error = await updateRes.json();
+            alert("Update failed:\n" + JSON.stringify(error, null, 2));
+        }
+    });
+
+    // Step 4: Cancel button logic
+    const cancelBtn = taskElement.querySelector(".cancelUpdate");
+    cancelBtn.addEventListener("click", () => {
+        getList(); // Reload task list view
+    });
+
+
+    });
+    const details=taskElement.querySelector(".showDetails");
+    details.addEventListener("click",()=>{
+        window.location.href=`detail.html?id=${task.id}`;
+    })
 
     // ✅ Attach delete listener
     const deleteBtn = taskElement.querySelector(".deleteBtn");
@@ -58,6 +123,30 @@ const taskId = String(taskElement.dataset.id);
             alert("Failed to delete task.");
         }
     });
+    const toggleBtn = taskElement.querySelector(".toggleBtn");
+toggleBtn.addEventListener("click", async () => {
+    try {
+        const res = await fetch(`https://todoapi-3kjr.onrender.com/task-toggle/${taskId}`, {
+            method: "PUT",
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("authToken")}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (res.ok) {
+            const result = await res.json();
+            alert(result.message || "Task status toggled.");
+            await getList(); // Refresh list to update status
+        } else {
+            alert("Failed to toggle task status.");
+        }
+    } catch (error) {
+        console.error("Toggle error:", error);
+        alert("Something went wrong.");
+    }
+});
+
 
     taskList.appendChild(taskElement);
 });
@@ -133,12 +222,15 @@ taskList.hidden=false;
 getList();
 
 
-document.querySelector(".searchBtn").addEventListener("click", async () => {
-    let token = localStorage.getItem("authToken");
-    let query = document.querySelector(".search").value;
+let searchInput = document.querySelector(".search");
+let searchBtn = document.querySelector(".searchBtn");
 
-    if (!query.trim()) {
-        alert("Please enter a search term");
+async function performSearch() {
+    let token = localStorage.getItem("authToken");
+    let query = searchInput.value.trim();
+
+    if (!query) {
+        alert("Please enter a search term.");
         return;
     }
 
@@ -147,12 +239,13 @@ document.querySelector(".searchBtn").addEventListener("click", async () => {
             "Authorization": `Token ${token}`
         }
     });
+
     if (res.status === 401) {
-    alert("Session expired. Please log in again.");
-    localStorage.removeItem("authToken");
-    window.location.href = "index.html";
-    return;
-}
+        alert("Session expired. Please log in again.");
+        localStorage.removeItem("authToken");
+        window.location.href = "index.html";
+        return;
+    }
 
     let data = await res.json();
     taskList.innerHTML = "";
@@ -169,7 +262,18 @@ document.querySelector(".searchBtn").addEventListener("click", async () => {
             <p>${task.description}</p>
             <p>${status}</p><br>`;
     });
+}
+
+// Event: Search button click
+searchBtn.addEventListener("click", performSearch);
+
+// ✅ Event: Pressing Enter in input field
+searchInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        performSearch();
+    }
 });
+
 const outurl = "https://todoapi-3kjr.onrender.com/logout/";
 
 document.querySelector(".logoutBtn").addEventListener("click", async () => {
