@@ -42,7 +42,7 @@ registerButton.addEventListener("click", async (e) => {
         localStorage.setItem("username", data.username);
 
         alert("Registration successful!");
-        window.location.href = "/Todo-API-django-rest-/frontend/index.html";
+        window.location.href = "index.html";
     } catch (error) {
         console.error("Registration error:", error);
         alert("Something went wrong. Check console.");

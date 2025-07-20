@@ -15,7 +15,7 @@ let res = await fetch(url, {
     if (res.status === 401) {
         alert("Session expired. Please log in again.");
         localStorage.removeItem("authToken");
-        window.location.href = "/Todo-API-django-rest-/frontend/index.html";
+        window.location.href = "index.html";
         return;
     }
 taskList.innerHTML = ""; 
@@ -107,7 +107,7 @@ const taskId = String(taskElement.dataset.id);
             if (res.status === 401) {
         alert("Session expired. Please log in again.");
         localStorage.removeItem("authToken");
-        window.location.href = "/Todo-API-django-rest-/frontend/index.html";
+        window.location.href = "index.html";
         return;
     }
 
@@ -150,7 +150,7 @@ document.querySelector(".searchBtn").addEventListener("click", async () => {
     if (res.status === 401) {
     alert("Session expired. Please log in again.");
     localStorage.removeItem("authToken");
-    window.location.href = "/Todo-API-django-rest-/frontend/index.html";
+    window.location.href = "index.html";
     return;
 }
 
@@ -189,7 +189,7 @@ document.querySelector(".logoutBtn").addEventListener("click", async () => {
         if (response.ok) {
             alert(data.message || "Logged out successfully.");
             localStorage.removeItem("authToken"); // remove token from localStorage
-            window.location.href = "/Todo-API-django-rest-/frontend/index.html";
+            window.location.href = "index.html";
         } else {
             alert(data.detail || "Logout failed.");
         }
