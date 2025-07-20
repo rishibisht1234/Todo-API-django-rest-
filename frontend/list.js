@@ -12,6 +12,12 @@ let res = await fetch(url, {
         "Content-Type": "application/json"
     }
 });
+    if (res.status === 401) {
+        alert("Session expired. Please log in again.");
+        localStorage.removeItem("authToken");
+        window.location.href = "/Todo-API-django-rest-/frontend/index.html";
+        return;
+    }
 taskList.innerHTML = ""; 
  const data = await res.json();
   if (data.length === 0) {
@@ -19,15 +25,43 @@ taskList.innerHTML = "";
             return;
         }
     
-    data.forEach(task => {
-                  let status = task.completed
-                ? "✅ Task has been Completed."
-                : "❌ Task has not been completed.";
-        taskList.innerHTML+=`<h2>${task.title}</h2>
+   data.forEach(task => {
+    const taskElement = document.createElement("div");
+    taskElement.classList.add("task");
+   taskElement.dataset.id = String(task.id);
+const taskId = String(taskElement.dataset.id);
+    
+
+    const status = task.completed ? "✅ Task has been Completed." : "❌ Task has not been completed.";
+    taskElement.innerHTML = `
+        <h2>${task.title}</h2>
         <p>${task.description}</p>
-        <p>${status}</p><br>`
+        <p>${status}</p><br>
+        <button class="deleteBtn">Delete Task</button>
+    `;
+
+    // ✅ Attach delete listener
+    const deleteBtn = taskElement.querySelector(".deleteBtn");
+    deleteBtn.addEventListener("click", async () => {
+           console.log("Deleting ID:", taskId, typeof taskId);
+        let dres = await fetch(`https://todoapi-3kjr.onrender.com/task-delete/${taskId}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("authToken")}`,
+            }
+        });
+
+        if (dres.ok) {
+            alert("Task deleted successfully.");
+            await getList();
+        } else {
+            alert("Failed to delete task.");
+        }
     });
-};
+
+    taskList.appendChild(taskElement);
+});
+}
     createTask.addEventListener("click",async()=>{
         // if (formContainer.innerHTML.trim() !== "") return; 
         formContainer.innerHTML=`<h2>Create New Task</h2>
@@ -38,10 +72,11 @@ taskList.innerHTML = "";
 <button type="submit">Submit Task</button>
 </form>
         <button class="cancelBtn">Cancel</button>`;
-        taskList.style.display="none";
+        
+        taskList.hidden=true;
         document.querySelector(".cancelBtn").addEventListener("click", () => {
     formContainer.innerHTML = "";
-    taskList.style.display="block";
+    taskList.hidden=false;
 });
 
 
@@ -53,6 +88,11 @@ taskList.innerHTML = "";
     let description = document.querySelector(".description").value;
     let deadlineInput = document.querySelector(".deadline").value;
     let deadline = new Date(deadlineInput).toISOString();
+    if (!deadlineInput) {
+    alert("Please provide a valid deadline.");
+    return;
+}
+
 
 
     try {
@@ -64,16 +104,22 @@ taskList.innerHTML = "";
             },
             body: JSON.stringify({ title, description, deadline })
         });
+            if (res.status === 401) {
+        alert("Session expired. Please log in again.");
+        localStorage.removeItem("authToken");
+        window.location.href = "/Todo-API-django-rest-/frontend/index.html";
+        return;
+    }
 
        if (res.status === 201) {
     alert("Task created successfully!");
     formContainer.innerHTML = "";
-    getList(); // ✅ Refresh list after successful creation
+    await getList(); // ✅ Refresh list after successful creation
 } else {
     const errorData = await res.json();
     alert("Error creating task:\n" + JSON.stringify(errorData, null, 2)); // ✅ Show real error
 }
-taskList.style.display="block";
+taskList.hidden=false;
 
     } catch (err) {
         alert("Network or server error:\n" + err.message);
@@ -101,6 +147,12 @@ document.querySelector(".searchBtn").addEventListener("click", async () => {
             "Authorization": `Token ${token}`
         }
     });
+    if (res.status === 401) {
+    alert("Session expired. Please log in again.");
+    localStorage.removeItem("authToken");
+    window.location.href = "/Todo-API-django-rest-/frontend/index.html";
+    return;
+}
 
     let data = await res.json();
     taskList.innerHTML = "";
