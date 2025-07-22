@@ -18,15 +18,14 @@ from rest_framework import serializers
 
 
 class ChangePassView(APIView):
-    
     @extend_schema(
         description='path to change password of authenticated user only',
         request=inline_serializer(
             name='RequestPasswordChange',
             fields={
-                'current_password':serializers.CharFields(), 
-                'new_password':serializers.CharFields(), 
-                'confirm_password':serializers.CharFields(), 
+                'current_password':serializers.CharField(), 
+                'new_password':serializers.CharField(), 
+                'confirm_password':serializers.CharField(), 
             }
         ),
         responses=inline_serializer(
