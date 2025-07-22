@@ -18,6 +18,7 @@ from rest_framework import serializers
 
 
 class ChangePassView(APIView):
+    permission_classes=[IsAuthenticated]
     @extend_schema(
         description='path to change password of authenticated user only',
         request=inline_serializer(
@@ -36,24 +37,23 @@ class ChangePassView(APIView):
         )
     )
     def post(self,request):
-        current_pass=request.data.get("current_password")
-        new_pass=request.data.get("new_password")
-        confirm_pass=request.data.get("confirm_password")
-        if not (current_pass and new_pass and confirm_pass):
+        current_password=request.data.get("current_password")
+        new_password=request.data.get("new_password")
+        confirm_password=request.data.get("confirm_password")
+        if not (current_password and new_password and confirm_password):
             return Response({"message":"All fields are required"},status=status.HTTP_400_BAD_REQUEST)
-        if new_pass!=confirm_pass:
+        if new_password!=confirm_password:
             return Response({'message':"new password not matching confirm password"},status=status.HTTP_400_BAD_REQUEST)
         
-        user=authenticate(username=request.user.username , password=current_pass)
-        if user in None:
-            return Response({'messsage':"Invalid password"},status=status.HTTP_400_BAD_REQUEST)
+        user=authenticate(username=request.user.username , password=current_password)
+        if user is None:
+            return Response({'message':"Invalid password"},status=status.HTTP_400_BAD_REQUEST)
         
 
-        user.set_password(new_pass)
+        user.set_password(new_password)
         user.save()
         return Response({"message":"password changed successfully"},status=status.HTTP_200_OK)
         
-    permission_classes=[IsAuthenticated]
         
 
 class RegisterView(APIView):
