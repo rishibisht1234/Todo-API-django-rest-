@@ -17,6 +17,46 @@ from drf_spectacular.utils import extend_schema,OpenApiRequest, OpenApiResponse,
 from rest_framework import serializers
 
 
+class ChangePassView(APIView):
+    
+    @extend_schema(
+        description='path to change password of authenticated user only',
+        request=inline_serializer(
+            name='RequestPasswordChange',
+            fields={
+                'current_password':serializers.CharFields(), 
+                'new_password':serializers.CharFields(), 
+                'confirm_password':serializers.CharFields(), 
+            }
+        ),
+        responses=inline_serializer(
+            name='PasswordChangeRequest',
+            fields={
+                'message':serializers.CharField()
+            }
+        )
+    )
+    def post(self,request):
+        current_pass=request.data.get("current_password")
+        new_pass=request.data.get("new_password")
+        confirm_pass=request.data.get("confirm_password")
+        if not (current_pass and new_pass and confirm_pass):
+            return Response({"message":"All fields are required"},status=status.HTTP_400_BAD_REQUEST)
+        if new_pass!=confirm_pass:
+            return Response({'message':"new password not matching confirm password"},status=status.HTTP_400_BAD_REQUEST)
+        
+        user=authenticate(username=request.user.username , password=current_pass)
+        if user in None:
+            return Response({'messsage':"Invalid password"},status=status.HTTP_400_BAD_REQUEST)
+        
+
+        user.set_password(new_pass)
+        user.save()
+        return Response({"message":"password changed successfully"},status=status.HTTP_200_OK)
+        
+    permission_classes=[IsAuthenticated]
+        
+
 class RegisterView(APIView):
     @extend_schema(
         request=inline_serializer(

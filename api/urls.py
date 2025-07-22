@@ -6,6 +6,7 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('change-password/',ChangePassView.as_view(),name='change-password'),
     path('task-list/',TaskListView.as_view(),name='task-list'),
     path('task-detail/<str:pk>',TaskDetailView.as_view(),name='task-detail'),
     path('task-create/',TaskCreateView.as_view(),name='task-create'),
