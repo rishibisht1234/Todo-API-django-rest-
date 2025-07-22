@@ -4,21 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="app.css">
 </head>
 <body>
 
     <header class="task">
          <h1>Task List</h1>
-         <div>
+         <div class="outer">         <div class="searchBar">
           <input type="text" placeholder="Search Task" class="search">
-         <button class="searchBtn">Search</button>
          </div>
+         <div>
+         <button class="searchBtn">Search</button>
+         <button class="showAllBtn">Show All Tasks</button>
+         </div>
+         </div>
+         <div>
          <button class="createTask">Create Task</button>
+         </div>
+         <div>
          <button class="logoutBtn">Logout</button>
+        </div>
     </header>
     <div class="formContainer"></div>
-    <div class="taskList"></div>
+    <div class="taskList">
+    </div>
     <script src="list.js"></script>
 </body>
 </html>

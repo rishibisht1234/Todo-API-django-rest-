@@ -1,0 +1,258 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #0f172a; /* Deep navy background */
+  color: #cbd5e1; /* Slate gray text */
+  padding: 20px;
+}
+
+/* =====================
+   Header/Navbar Styling
+   ===================== */
+   header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 75px;
+  padding: 0 20px;
+  background-color: #1e293b; /* Dark navy */
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+  font-size: 1.8rem;
+  color: #38bdf8; /* Sky Blue */
+}
+
+header input[type="text"] {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #334155;
+  background-color: #0f172a;
+  color: #cbd5e1;
+  margin-right: 8px;
+}
+
+header button {
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  margin-left: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+header button:hover {
+  background-color: #1d4ed8;
+}
+.searchBar{
+    display: flex;
+}
+.searchBtn{
+      background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  margin-left: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+    
+}
+.outer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ============================
+   Task Card / Table Formatting
+   ============================ */
+.taskList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.task,
+.task.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 15px;
+  transition: background-color 0.3s;
+}
+
+.task:hover {
+  background-color: #334155;
+}
+
+.task.header {
+  font-weight: bold;
+  background-color: #0f172a;
+  color: #38bdf8; /* Sky Blue */
+  border: 1px solid #38bdf8;
+}
+
+.cell {
+  flex: 1;
+  text-align: center;
+  padding: 5px;
+  white-space: nowrap;
+}
+
+.cell button {
+  background-color: #2563eb; /* Blue */
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin: 2px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.cell button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Status Indicators */
+.task .status.completed {
+  color: #22c55e; /* Green */
+}
+
+.task .status.incomplete {
+  color: #ef4444; /* Red */
+}
+
+/* Form Styling */
+form input,
+form textarea,
+form button {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+form input[type="text"],
+form textarea,
+form input[type="datetime-local"] {
+  background-color: #1e293b;
+  color: #cbd5e1;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 8px;
+  margin: 8px 0;
+  width: 100%;
+}
+
+form button {
+  background-color: #2563eb;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #1d4ed8;
+}
+/* ===========================
+   Unified Form Field Styling
+   =========================== */
+input[type="text"],
+input[type="datetime-local"],
+textarea {
+  background-color: #1e293b; /* dark box like others */
+  color: #cbd5e1; /* light text */
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 8px;
+  margin: 8px 0;
+  width: 100%;
+  transition: border 0.3s, background-color 0.3s;
+}
+
+input[type="text"]::placeholder,
+textarea::placeholder {
+  color: #64748b; /* muted placeholder text */
+}
+
+input[type="text"]:focus,
+input[type="datetime-local"]:focus,
+textarea:focus {
+  outline: none;
+  border: 1px solid #38bdf8; /* bright border on focus */
+  background-color: #0f172a;
+}
+
+/* Optional: Style checkbox */
+input[type="checkbox"] {
+  accent-color: #38bdf8; /* sky blue checkbox */
+  transform: scale(1.2);
+  margin-right: 5px;
+}
+
+.detail-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 700px;
+  margin: auto;
+}
+
+.detail {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-box {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.15);
+}
+
+.info-box h2 {
+  margin-bottom: 0.75rem;
+  color: #60a5fa;
+  font-size: 1.2rem;
+}
+
+.info-box p {
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Status styling */
+.completed {
+  color: #22c55e;
+  font-weight: bold;
+}
+
+.incomplete {
+  color: #f87171;
+  font-weight: bold;
+}
+

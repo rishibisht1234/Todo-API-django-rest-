@@ -34,7 +34,7 @@ let res=await fetch(url,options);
   localStorage.setItem("username", data.username);
 
 
-     window.location.href="list.html";
+     window.location.replace("list.html");
 }catch (error) {
     console.error("Login error:", error);
     alert("Something went wrong. Check console.");

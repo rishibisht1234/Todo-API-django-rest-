@@ -1,24 +1,33 @@
-*{
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
-.heading{
+
+body {
+    background-color: #1e1e2f; /* Dark background */
+    color: #e0e0e0;            /* Light text */
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.heading {
     height: 75px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 30px;
     font-weight: 700;
+    color: #38bdf8; /* Neon cyan */
 }
-.box{
+
+.box {
     margin-top: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    
 }
-.login,.register{
-  
+
+.login, .register {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,32 +36,66 @@
     border-radius: 0.5rem;
     height: 500px;
     width: 500px;
-    border: 2px solid black;
+    border: 2px solid #44475a;
+    background-color: #2e2e3e;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
 }
-.loginHeading, .registerHeading{
+
+.loginHeading, .registerHeading {
     font-size: 75px;
     font-weight: 700;
+    color: #2563eb;
 }
-.login input,.register input{
+
+.login input, .register input {
     font-size: 2.5rem;
     border-radius: 0.5rem;
-    border: 2px solid black;
+    border: 2px solid #44475a;
+    background-color: #3b3b4f;
+    color:#38bdf8;
+    padding: 8px;
+    width: 90%;
 }
-.login button,.register button{
+
+.login input::placeholder,
+.register input::placeholder {
+    color: #aaa;
+}
+
+.login button, .register button {
     font-size: 1.85rem;
     border-radius: 0.5rem;
     cursor: pointer;
-  
+    background-color: #4FC3F7;
+    color: #1e1e2f;
+    padding: 10px 20px;
+    border: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.register a{
+.login button:hover, .register button:hover {
+    background-color: #2563eb;
+    color: #fff;
+    border: 2px solid white;
+}
+
+.login a,.register a {
     text-decoration: none;
+    color: #2563eb;
 }
 
+.register a:hover {
+    text-decoration: underline;
+}
 
-
-.task{
+.task {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #2e2e3e;
+    color: #e0e0e0;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 0.5rem;
+    border: 1px solid #44475a;
 }
